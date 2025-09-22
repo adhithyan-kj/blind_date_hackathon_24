@@ -341,10 +341,11 @@
             closeChatBtn.addEventListener('click', () => toggleChat(false));
             
             // --- Gemini API Call ---
-            const apiKey = ""; // API key is handled by the execution environment.
+            // IMPORTANT: Replace "YOUR_GEMINI_API_KEY" with your actual Gemini API key.
+            const apiKey = "AIzaSyA079gImrV5a_xf-cvYHTbGsjM_PdU7xXo"; 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
             
-            const systemPrompt = `You are a friendly and helpful AI assistant for VitaFlow, a blood donation web app. Your role is to answer user questions about blood donation, the donation process, eligibility, and how to use the app. Be encouraging, clear, and concise. Do not provide medical advice, but you can provide generally known facts about blood donation. If asked something outside this scope, politely state that you are specialized in blood donation-related queries. Keep your answers relatively short and easy to read in a chat format.`;
+            const systemPrompt = `You are VitaFlow Assistant, an AI that helps website users by answering any questions, guiding them through the app, assisting with donations and requests, and providing safe, clear advice`;
             
             chatForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -354,6 +355,12 @@
                 appendMessage(userMessage, 'user');
                 chatInput.value = '';
                 typingIndicator.classList.remove('hidden');
+
+                if (apiKey === "YOUR_GEMINI_API_KEY") {
+                    appendMessage("Please add your Gemini API key in the code to enable the AI assistant.", 'ai');
+                    typingIndicator.classList.add('hidden');
+                    return;
+                }
 
                 try {
                     const aiResponse = await callGeminiAPI(userMessage);
@@ -425,3 +432,4 @@
     </script>
 </body>
 </html>
+
